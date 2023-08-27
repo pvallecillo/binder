@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Binder",
+    "slug": "Binder",
+    "description": "An app designed to make your school life simplier. Use Binder tp connect with classmates and keep track of your study materials.",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.caleb.binder"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.caleb.binder"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "01d18688-3ae9-4654-aaf5-85244ab8df99"
+      }
+    }
+  }
+}

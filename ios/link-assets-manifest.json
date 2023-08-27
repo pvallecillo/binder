@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Boltz-Regular.ttf",
+      "sha1": "2daa8210623ccd91591452d75d9f3b8efc2ba3dd"
+    },
+    {
+      "path": "assets/fonts/Kanit-Bold.ttf",
+      "sha1": "4d376a5447efe2ece1e3e39ff0fc2bbf3af0e5f8"
+    },
+    {
+      "path": "assets/fonts/Kanit-ExtraLight.ttf",
+      "sha1": "c948dac66c673a313a9b43294e35b73a14a0cf69"
+    },
+    {
+      "path": "assets/fonts/Kanit-Light.ttf",
+      "sha1": "5f73684474721ddfc98168f5b8a634d7552e89d4"
+    },
+    {
+      "path": "assets/fonts/Kanit-Medium.ttf",
+      "sha1": "61ac6e618ea64ca7f4ae2444194e0bad4c72c8f9"
+    },
+    {
+      "path": "assets/fonts/Kanit-Regular.ttf",
+      "sha1": "4d7b70e9717ae0adecc332fac9af7457063886a4"
+    },
+    {
+      "path": "assets/fonts/Kanit-SemiBold.ttf",
+      "sha1": "9715fb086966063735f84aa37f3e2dcd654ce999"
+    },
+    {
+      "path": "assets/fonts/SpaceMono-Regular.ttf",
+      "sha1": "fae3a5a43b50e0408fd61e14383d94a023d332b0"
+    }
+  ]
+}
