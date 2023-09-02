@@ -8,9 +8,6 @@ export const MediumText = ({
     children,
     style,
     color,
-
-    disabled,
-
     ...rest }) => {
     const colorScheme = useColorScheme()
     return (
@@ -31,7 +28,7 @@ export const MediumText = ({
             primary && { color: Colors.primary },
             p && { fontSize: 14 },
             h2 && { fontSize: 28 },
-
+            h1 && { fontSize: 36 },
             h3 && { fontSize: 20 },
             h4 && { fontSize: 18 },
             h5 && { fontSize: 16 },
@@ -52,7 +49,6 @@ export const RegularText = ({
     children,
     style,
     color,
-    disabled,
     ...rest }) => {
     const colorScheme = useColorScheme()
 
@@ -76,8 +72,8 @@ export const RegularText = ({
                 accent && { color: Colors.accent },
                 primary && { color: Colors.primary },
                 p && { fontSize: 14 },
+                h1 && { fontSize: 36 },
                 h2 && { fontSize: 28 },
-
                 h3 && { fontSize: 20 },
                 h4 && { fontSize: 18 },
                 h5 && { fontSize: 16 },
@@ -99,7 +95,6 @@ export const LightText = ({
     white, accent, primary,
     children,
     style,
-    disabled,
     color,
 
     ...rest }) => {
@@ -121,6 +116,8 @@ export const LightText = ({
             accent && { color: Colors.accent },
             primary && { color: Colors.primary },
             p && { fontSize: 14 },
+            h1 && { fontSize: 36 },
+            h2 && { fontSize: 28 },
             h3 && { fontSize: 20 },
             h4 && { fontSize: 18 },
             h5 && { fontSize: 16 },
@@ -144,7 +141,6 @@ export const BoldText = ({
     children,
     style,
     color,
-    disabled,
     ...rest }) => {
     const colorScheme = useColorScheme()
 

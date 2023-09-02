@@ -39,6 +39,8 @@ import { useSharedDeskItems } from '../hooks/useSharedDeskItems'
 import SendButton from '../components/SendButton'
 import { useDesk } from '../hooks/useDesk'
 import StyledTextInput from '../components/StyledTextInput'
+import { ActivityIndicator } from 'react-native'
+import OptionsList from '../components/OptionsList'
 
 
 const Desk = (props) => {
@@ -60,7 +62,7 @@ const Desk = (props) => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false)
     const isMain = props.id != null;
-    const deskTypes = ["Notes", "Flashcards", "Study Guide", "Graded Work", "Other"];
+    const deskTypes = ["Notes", "Flashcards", "Study Guide", "Graded Work", "Game", "Other"];
     const id = props.id || props?.route?.params.id;
     const { deskItems } = useDeskItems(id);
     const { bookmarkedItemRefs } = useBookmarkedItems(id);
@@ -75,7 +77,6 @@ const Desk = (props) => {
     const { desk } = useDesk(id);
     const headerOpacity = useRef(new Animated.Value(1)).current
     const [deskItemsResults, setDeskItemsResults] = useState(deskItems);
-    //opacity of the header when in selection mode
     const selectionHeaderOpacity = useRef(new Animated.Value(1)).current
     const [search, setSearch] = useState('')
     const Tab = createMaterialTopTabNavigator();
@@ -107,6 +108,10 @@ const Desk = (props) => {
                     setDeskRequestStatus(status);
                     setLoading(false);
                 })
+
+        }
+        else {
+            setLoading(false);
 
         }
 
@@ -148,45 +153,17 @@ const Desk = (props) => {
     }, [bookmarkedItemRefs, sharedDeskItemRefs, deskItems])
 
     useEffect(() => {
-        if (selectionMode) {
-
-            Animated.sequence([
-                Animated.timing(headerOpacity, {
-                    toValue: 0,
-                    duration: 100,
-                    useNativeDriver: true
-                }),
-                Animated.timing(selectionHeaderOpacity, {
-                    toValue: 1,
-                    duration: 100,
-                    useNativeDriver: true
-                }),
-
-            ]).start();
-
-        }
-
-
-        else {
+        if (!selectionMode)
             setSelectedDeskItem(null);
-            Animated.sequence([
-                Animated.timing(headerOpacity, {
-                    toValue: 1,
-                    duration: 100,
-                    useNativeDriver: true
-                }),
-                Animated.timing(selectionHeaderOpacity, {
-                    toValue: 0,
-                    duration: 100,
-                    useNativeDriver: true
-                }),
 
-            ]).start();
-        }
+
     }, [selectionMode])
 
     const onRefresh = () => {
-
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false)
+        }, 1000);
 
     }
     const isBookmarked = () => {
@@ -228,6 +205,7 @@ const Desk = (props) => {
 
     const onDeletePress = () => {
         setShowConfirmationModal(true);
+
     }
 
 
@@ -340,7 +318,18 @@ const Desk = (props) => {
 
 
 
+    const onDeskOptionPress = (option) => {
+        setShowDeskTypeModal(false);
 
+        if (option == "Game") {
+            props.navigation.navigate('NewGame', { useCase: 'new desk item' });
+
+        }
+        else
+            props.navigation.navigate('SaveDeskItem', { useCase: 'new desk item', type: option });
+
+
+    }
 
     const handleDeskRequest = () => {
         setLoadingDeskRequest(true);
@@ -364,12 +353,10 @@ const Desk = (props) => {
     }
 
     const handleDeleteDeskItem = () => {
+        setShowConfirmationModal(false);
+        props.toggleSelectionMode();
         deleteUserDeskItem(selectedDeskItem?.id)
-            .then(() => {
-                dispatch({ type: 'DELETE_DESK_ITEM', id: selectedDeskItem?.id });
-
-                setShowConfirmationModal(false);
-            })
+            .catch((e) => props.onTaskError(e.message))
     }
 
 
@@ -401,7 +388,7 @@ const Desk = (props) => {
 
 
 
-                    {hasAccess() ?
+                    {hasAccess() && !loading ?
                         <FlatList
                             ListHeaderComponent={ListHeaderComponent}
                             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -461,20 +448,28 @@ const Desk = (props) => {
                             }
                         />
                         :
+                        !loading ?
+                            <View style={{ alignItems: 'center', justifyContent: 'center', height: '70%' }}>
 
-                        <View style={{ alignItems: 'center', justifyContent: 'center', height: '70%' }}>
+                                <CustomImage source={assets.lock} style={{ width: 80, height: 80, tintColor: Colors[colorScheme].darkGray }} />
+                                <RegularText verydarkgray style={{ marginTop: 10 }}>{"This Desk is private"}</RegularText>
 
-                            <CustomImage source={assets.lock} style={{ width: 80, height: 80, tintColor: Colors[colorScheme].darkGray }} />
-                            <RegularText verydarkgray style={{ marginTop: 10 }}>{"This Desk is private"}</RegularText>
+                                <Button
+                                    title={deskRequestStatus != 'pending' ? 'Request Access' : 'Request sent'}
+                                    style={{ marginTop: 30 }}
+                                    onPress={handleDeskRequest}
+                                    loading={loadingDeskRequest}
+                                    disabled={deskRequestStatus == 'pending'}
+                                />
+                            </View>
 
-                            <Button
-                                title={deskRequestStatus != 'pending' ? 'Request Access' : 'Request sent'}
-                                style={{ marginTop: 30 }}
-                                onPress={handleDeskRequest}
-                                loading={loadingDeskRequest}
-                                disabled={deskRequestStatus == 'pending'}
+                            :
+
+                            <ActivityIndicator
+                                size="large"
+                                style={{ marginTop: 50 }}
+                                color={Colors[colorScheme].darkGray}
                             />
-                        </View>
                     }
 
 
@@ -487,6 +482,23 @@ const Desk = (props) => {
     return (
         <View style={{ flex: 1, backgroundColor: Colors[colorScheme].invertedTint }}>
             <StatusBar style={colorScheme == 'light' ? 'dark' : 'light'} />
+
+
+            <SlideModal
+                height={height - ((deskTypes.length + 1) * 50) - 10}
+                showModal={showDeskTypeModal}
+                onCancel={() => setShowDeskTypeModal(false)}>
+                <OptionsList
+                    onCancel={() => setShowDeskTypeModal(false)}
+                    options={deskTypes}
+                    onOptionPress={[onDeskOptionPress]}
+
+                />
+            </SlideModal>
+
+
+
+
             {!isMain && <Header
                 title={isCurrentUser() ? 'My Desk' : 'Desk'}
                 direction='vertical'
@@ -495,6 +507,10 @@ const Desk = (props) => {
             />
             }
             <TopInfoBar />
+
+
+
+
             {selectionMode &&
 
                 <View style={{ zIndex: 1, bottom: 0, position: 'absolute', flexDirection: 'row', justifyContent: 'space-between', height: 100, width: '100%', backgroundColor: Colors[colorScheme].invertedTint, alignItems: 'center', paddingHorizontal: 20, borderTopColor: Colors[colorScheme].gray, borderTopWidth: 1 }}>
@@ -650,38 +666,6 @@ const Desk = (props) => {
             </Tab.Navigator>
 
 
-            <Modal
-                transparent
-                visible={showDeskTypeModal} >
-                <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={() => setShowDeskTypeModal(false)}
-                    style={{ backgroundColor: '#00000010', flex: 1, alignItems: 'center' }} >
-
-                    <CollapsibleView
-
-                        style={{ position: 'absolute', bottom: 200, right: 30, padding: 0, backgroundColor: Colors[colorScheme].background, borderWidth: 0, borderRadius: 15, ...SHADOWS[colorScheme] }}
-                        expanded={showDeskTypeModal}
-                        noArrow
-                        duration={600}>
-                        <RegularText darkgray style={{ marginBottom: 10, marginHorizontal: 10 }}>Desk Item</RegularText>
-                        {deskTypes.map((deskType) => (
-                            <TouchableOpacity
-                                key={deskType}
-                                onPress={() => {
-                                    setShowDeskTypeModal(false)
-                                    props.navigation.navigate('SaveDeskItem', { useCase: 'new desk item', type: deskType })
-                                }}
-                                style={{ borderTopColor: '#EAEBF1', borderTopWidth: 1 }}>
-                                <RegularText style={{ margin: 10 }}>{deskType}</RegularText>
-                            </TouchableOpacity>
-
-
-                        ))}
-
-                    </CollapsibleView>
-                </TouchableOpacity>
-            </Modal>
 
 
             {!selectionMode && isCurrentUser() &&

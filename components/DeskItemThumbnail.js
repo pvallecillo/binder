@@ -244,7 +244,7 @@ const DeskItemThumbnail = ({
                     </TouchableWithoutFeedback>
                 </View>
 
-                {deskItem.type !== "Flashcards" ?
+                {deskItem.type !== "Flashcards" && deskItem.type != "Game" ?
 
                     <View style={{ marginVertical: 10, height: 160 }}>
 
@@ -273,10 +273,12 @@ const DeskItemThumbnail = ({
                             ...SHADOWS[colorScheme],
                             shadowColor: 'lightgray'
                         }]}>
-
+                            <CustomImage source={assets.play} style={{ position: 'absolute', width: '50%', height: '100%', tintColor: Colors.primary + "50" }} />
                             {deskItem.divisionNumber != null &&
                                 <RegularText darkgray>{deskItem.divisionType + " " + deskItem.divisionNumber}</RegularText>}
-                            <MediumText accent h4 style={{ textAlign: 'center' }}>{deskItem.title}</MediumText>
+                            <MediumText accent={deskItem.type == "Flashcards"} primary={deskItem.type == "Game"} h4 style={{ textAlign: 'center' }}>{deskItem.title}</MediumText>
+
+
                         </View>
                     </View>
 

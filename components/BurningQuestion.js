@@ -205,7 +205,7 @@ const BurningQuestion = ({ useCase, user, bq, onLongPress, onAnswerPress, disabl
                                     name={!bq.isAnonymous ? getDisplayNameOrYou(user) : 'Someone'}
                                 />
 
-                                <RegularText darkgray>{moment(new Date(bq.createdAt)).format('MMM DD, YYYY')}</RegularText>
+                                <RegularText darkgray>{moment(bq.createdAt).format('MMM DD, YYYY')}</RegularText>
                             </View>}
                         <MediumText h4 style={{ marginTop: 10 }} >{bq.subject}{": "}</MediumText>
                         <RegularText h5 style={{ marginTop: 10 }} numberOfLines={useCase == 'chat' ? 3 : null}>{bq.question}</RegularText>

@@ -67,6 +67,8 @@ import { getErrorMessage } from './utils';
 import SendReport from './screens/SendReport';
 import Bug from './screens/Bug';
 import ResetPassword from './screens/ResetPassword';
+import Game from './screens/Game';
+import NewGame from './screens/NewGame';
 
 
 
@@ -343,6 +345,26 @@ export default function App() {
               name="Bug"
 
               children={(props) => <Bug
+                onTaskStart={onTaskStart}
+                onTaskComplete={onTaskComplete}
+                onTaskError={onTaskError}
+                {...props} />}
+
+            />
+            <Stack.Screen
+              name="Game"
+
+              children={(props) => <Game
+                onTaskStart={onTaskStart}
+                onTaskComplete={onTaskComplete}
+                onTaskError={onTaskError}
+                {...props} />}
+
+            />
+            <Stack.Screen
+              name="NewGame"
+
+              children={(props) => <NewGame
                 onTaskStart={onTaskStart}
                 onTaskComplete={onTaskComplete}
                 onTaskError={onTaskError}

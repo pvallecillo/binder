@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker"
 
 const book = { uri: "https://i.ibb.co/937Ngvb/book.png" }
 const book_color = { uri: "https://i.ibb.co/d25P4MZ/book-color.png" }
@@ -57,10 +56,12 @@ const trash = { uri: "https://i.ibb.co/yk6rNCC/trash.png" }
 const unlock = { uri: "https://i.ibb.co/pr4zZ8r/unlock.png" }
 const view = { uri: "https://i.ibb.co/cwncLMY/view.png" }
 const logo_2 = { uri: "https://i.ibb.co/cDd6KxY/logo-2.png" }
-const school_background = { uri: "https://i.ibb.co/BGyvjc3/school-background.png", id: "BGyvjc3" }
-const logo = { uri: "https://i.ibb.co/Hp6Qfyb/logo.png", id: 'Hp6Qfyb' }
+const school_background = { uri: "https://i.ibb.co/BGyvjc3/school-background.png" }
+const logo = { uri: "https://i.ibb.co/Hp6Qfyb/logo.png" }
+const play = { uri: "https://i.ibb.co/nrGLwTs/play.png" }
 export default {
     leave,
+    play,
     down_arrow,
     school_background,
     lighting_bolt,

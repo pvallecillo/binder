@@ -15,7 +15,7 @@ const SelectUsers = (props) => {
     const users = _users.filter(user => user.uid != auth.currentUser.uid);
     const [usersResults, setUsersResults] = useState(users);
     const [search, setSearch] = useState('');
-    const { renderSubmitButtonTitle, onSubmit, title, submitButtonTitle } = props.route.params;
+    const { renderSubmitButtonTitle, onSubmit, title, submitButtonTitle, headerRight } = props.route.params;
     const colorScheme = useColorScheme();
     const currentUser = useSelector(state => state.userState.currentUser);
     const studyBuddies = useSelector(state => state.userState.studyBuddies);
@@ -118,6 +118,7 @@ const SelectUsers = (props) => {
                 selectionLimit={10}
                 type={'user'}
                 submitButtonTitle={submitButtonTitle}
+                headerRight={headerRight}
                 onSubmit={handleSubmit}
                 handleSearch={handleSearch}
                 sections={sectionListData}

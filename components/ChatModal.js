@@ -15,9 +15,7 @@ const ChatModal = ({ message, visible, onCancel, onReplyPress, onReportPress, on
     const isCurrentUser = () => {
         return message?.uid === auth.currentUser.uid;
     }
-    if (!message) {
-        return <></>
-    }
+
     return (
 
 
@@ -31,24 +29,24 @@ const ChatModal = ({ message, visible, onCancel, onReplyPress, onReportPress, on
 
                     <View>
                         <View style={{ marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <RegularText h5 accent={auth.currentUser.uid == message.uid} primary={auth.currentUser.uid != message.uid}>
-                                {getDisplayNameOrYou(message.user)}
+                            <RegularText h5 accent={auth.currentUser.uid == message?.uid} primary={auth.currentUser.uid != message?.uid}>
+                                {getDisplayNameOrYou(message?.user)}
                             </RegularText>
 
-                            <LightText darkgray>{moment(new Date(message.createdAt)).calendar()}</LightText>
+                            <LightText darkgray>{moment(message?.createdAt).calendar()}</LightText>
 
                         </View>
 
-                        {message.contentType == 'text' &&
+                        {message?.contentType == 'text' &&
                             <RegularText numberOfLines={1} h5>{message.text}</RegularText>
                         }
-                        {message.contentType == 'photo' &&
+                        {message?.contentType == 'photo' &&
                             <LightText h5 darkgray>{"photo"}</LightText>
                         }
-                        {message.contentType == 'burning question' &&
+                        {message?.contentType == 'burning question' &&
                             <LightText h5 darkgray>{"Burning Question"}</LightText>
                         }
-                        {message.contentType == 'bq answer' &&
+                        {message?.contentType == 'bq answer' &&
                             <LightText h5 darkgray>{'Burning Question answer'}</LightText>
                         }
 
@@ -62,14 +60,14 @@ const ChatModal = ({ message, visible, onCancel, onReplyPress, onReportPress, on
                 onCancel={onCancel}
                 options={
                     isCurrentUser() ?
-                        [message.pinned ? 'Unpin' : 'Pin', 'Reply'] :
-                        [message.pinned ? 'Unpin' : 'Pin', 'Reply', 'Report']}
+                        [message?.pinned ? 'Unpin' : 'Pin', 'Reply'] :
+                        [message?.pinned ? 'Unpin' : 'Pin', 'Reply', 'Report']}
 
                 onOptionPress={
                     isCurrentUser() ?
                         [onPinPress, onReplyPress] :
                         [onPinPress, onReplyPress, onReportPress]}
-                redIndex={message.uid != auth.currentUser.uid ? 2 : null}
+                redIndex={message?.uid != auth.currentUser.uid ? 2 : null}
 
             />
 

@@ -439,7 +439,22 @@ export const checkUniqueUsername = (value) => new Promise((resolve, reject) => {
 })
 
 
+export const isValidImage = (imageUrl) => {
+    const imageUrlRegex = /^.(jpeg|jpg|gif|png|webbp)$/i;
+    const isValidImageUrl = imageUrlRegex.test(imageUrl);
+    if (isValidImageUrl) {
+        fetch(imageUrl)
+            .then(response => {
+                if (response.ok) {
+                    return true;
+                }
 
+            })
+            .catch((e) => console.log(e))
+
+    }
+    return false;
+}
 
 
 export function checkValidUsername(value, setError) {

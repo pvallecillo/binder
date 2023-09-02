@@ -50,6 +50,8 @@ import SendButton from '../components/SendButton'
 import { ConfirmationModal } from '../components/Modals'
 import { useUsersDeskItems } from '../hooks/useUsersDeskItems'
 import CustomImage from '../components/CustomImage'
+import { SHADOWS } from '../constants/Theme'
+import ScaleButton from '../components/ScaleButton'
 const DeskItem = (props) => {
 
     const { deskId } = props.route.params;
@@ -307,6 +309,7 @@ const DeskItem = (props) => {
     if (!deskItem) {
         return <></>
     }
+    console.log(deskItem.cards)
     return (
 
 
@@ -330,15 +333,8 @@ const DeskItem = (props) => {
 
                 showModal={showConfirmationModal}
                 toValue={0.5}
-                onCancel={() => setShowConfirmationModal(false)}
-
-
-            >
-
-
-
+                onCancel={() => setShowConfirmationModal(false)}>
                 <ConfirmationModal
-
                     onConfirmPress={handleDelete}
                     onCancelPress={() => setShowConfirmationModal(false)}
                     confirmText={"Delete"}
@@ -350,8 +346,7 @@ const DeskItem = (props) => {
             <SlideModal
                 height={isCurrentUser() ? height - (7 * 50) - 10 : height - (5 * 50) - 10}
                 showModal={showDeskItemModal}
-                onCancel={() => setShowDeskItemModal(false)}
-            >
+                onCancel={() => setShowDeskItemModal(false)}>
                 <OptionsList
                     showsIcons={false}
                     onCancel={() => setShowDeskItemModal(false)}
@@ -411,10 +406,10 @@ const DeskItem = (props) => {
                 <MediumText h3 style={{ alignSelf: 'center', marginTop: 10 }}>{deskItem.title}</MediumText>
 
 
-                <View style={{ marginTop: 20, height: 350, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ marginTop: 20, height: 350, backgroundColor: deskItem.type == "Game" ? Colors.primary + "50" : null, borderRadius: 15, alignItems: 'center', justifyContent: 'center' }}>
 
 
-                    {deskItem.type != 'Flashcards' ?
+                    {deskItem.type != 'Flashcards' && deskItem.type != "Game" &&
 
                         < View style={{ width: width - 30, backgroundColor: 'black', overflow: 'hidden', borderRadius: 15 }}>
 
@@ -447,8 +442,9 @@ const DeskItem = (props) => {
 
 
 
-                        </View>
-                        :
+                        </View>}
+
+                    {deskItem.type == "Flashcards" &&
                         <View >
 
                             <FlatList
@@ -479,12 +475,29 @@ const DeskItem = (props) => {
 
 
                     }
-                    <CustomImage
-                        source={deskItem.isPublic ? assets.unlock : assets.lock}
-                        style={{ position: 'absolute', top: 20, right: 20, tintColor: deskItem.isPublic ? Colors.accent : Colors[colorScheme].darkGray, width: 25, height: 25 }}
+
+                    {deskItem.type == "Game" &&
+                        <ScaleButton onPress={() =>
+                            props.navigation.navigate('Game', { game: deskItem })}>
+
+                            <View style={{ flexDirection: 'row', backgroundColor: Colors.primary, borderRadius: 50, padding: 20, alignItems: 'center', justifyContent: 'center' }}>
+
+                                <CustomImage source={assets.play} style={{ width: 30, height: 30, tintColor: Colors.white }} />
+                                <MediumText white h3 style={{ marginLeft: 10 }}>Play</MediumText>
+                            </View>
+                        </ScaleButton>
+
+                    }
+                    <View style={{ position: 'absolute', top: 20, right: 20, padding: 10, backgroundColor: Colors.white, ...SHADOWS[colorScheme], borderRadius: 50, justifyContent: 'center', alignItems: 'center' }}>
 
 
-                    />
+                        <CustomImage
+                            source={deskItem.isPublic ? assets.unlock : assets.lock}
+                            style={{ tintColor: deskItem.isPublic ? Colors.accent : Colors[colorScheme].darkGray, width: 25, height: 25 }}
+
+
+                        />
+                    </View>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
 
@@ -520,26 +533,27 @@ const DeskItem = (props) => {
                             style={[styles.icon, { tintColor: Colors[colorScheme].darkGray }]} />
                     </TouchableOpacity>
 
-                    <View style={{ marginHorizontal: 40, width: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        {deskItem?.media ?
-                            deskItem.media.map((_, index) =>
-                                <View
-                                    key={index}
-                                    style={{ marginRight: 10, width: 100 / deskItem.media.length, height: 5, borderRadius: 50, backgroundColor: index == currentIndex ? Colors.accent : Colors[colorScheme].gray }} />
+                    {deskItem.type != "Game" &&
+                        <View style={{ marginHorizontal: 40, width: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            {deskItem?.media ?
+                                deskItem.media.map((_, index) =>
+                                    <View
+                                        key={index}
+                                        style={{ marginRight: 10, width: 100 / deskItem.media.length, height: 5, borderRadius: 50, backgroundColor: index == currentIndex ? Colors.accent : Colors[colorScheme].gray }} />
 
-                            )
-                            :
-                            deskItem.cards.map((_, index) =>
-                                <View
-                                    key={index}
-                                    style={{ marginRight: 8, width: 100 / deskItem.cards.length, height: 5, borderRadius: 50, backgroundColor: index == currentIndex ? Colors.accent : Colors[colorScheme].gray }} />
+                                )
+                                :
+                                deskItem.cards.map((_, index) =>
+                                    <View
+                                        key={index}
+                                        style={{ marginRight: 8, width: 100 / deskItem.cards.length, height: 5, borderRadius: 50, backgroundColor: index == currentIndex ? Colors.accent : Colors[colorScheme].gray }} />
 
-                            )
-                        }
+                                )
+                            }
 
 
 
-                    </View>
+                        </View>}
 
 
                     <TouchableOpacity

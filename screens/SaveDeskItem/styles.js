@@ -64,9 +64,6 @@ const styles = StyleSheet.create({
     },
 
     sectionHeaderText: {
-
-        color: 'gray',
-        fontSize: 18,
         marginTop: 30,
         marginBottom: 10,
     },

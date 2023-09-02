@@ -56,11 +56,11 @@ const SignUpPhoto = (props) => {
             isPublic: false
         })
             .then(id => {
-                sendMessage(id, "text", "Hey " + displayName + "! Welcome to Binder, the app designed to make your school life easier. Here are a few tips to get you started:" +
+                sendMessage(id, "text", "Hey, " + displayName + "! Welcome to Binder, the app designed to make your school life simplier. Here are a few tips to get you started:" +
                     "\n\n\t1.) Discover People 🔍: Start finding people in your school in the Search screen. Once you add a student as a friend, you can do other actions like chat with them and add them as a Study Buddy!" +
                     "\n\n\t2.) Make Study Buddies 🤓: Study Buddies are denoted by the 🤓 emoji. Making Study Buddies helps you keep the people who you choose to study with separate from everyone else. Easily find them using the filter shortcuts below the search bar." +
-                    "\n\n\t3.) Join Communities ✅: Start joining your classes, clubs and other communities in the Discvover screen so you can connect with your classmates and other students. If you dont see what you're looking for you can create a new community by tapping \"Create\"." +
-                    "\n\n\t4.) Build your Desk 📚: Just like in your typical classrooms, you'll see that you have your own Desk. Stop by your Desk to start adding your study materials, like Notes and Flashcards. You can also send them to students and communities by tapping on the Desk icon in the Chat screen. By default your Desk is private. Toggle the switch in the top right of the Desk screen to make it public and let other students see your all your scholarly creations!" +
+                    "\n\n\t3.) Join Communities ✅: Start joining your classes, clubs and other communities in the Discover screen so you can connect with your classmates and other students. If you don't see what you're looking for, you can create a new community by tapping \"Create.\"" +
+                    "\n\n\t4.) Build your Desk 📚: Just like in your typical classrooms, you'll see that you have your own Desk. This is where you can store all your study materials such as Notes and Flashcards. Stop by your Desk to start building it. Whatever you create, you can share it to students and communities by tapping on the Desk icon in the Chat screen. By default your Desk is private. Toggle the switch in the top right of the Desk screen to make it public and let other students see your all your scholarly creations!" +
                     "\n\n\t5.) Finish your Profile 👤: Finally, you should finish setting up your profile information in the Profile screen so people can connect with you. Tap on the pencil icons to start entering your info." +
                     "\n\nIf you have any questions, suggestions, or spot a bug, you can submit it through the Settings screen.\n\nHappy Binding!", null, null, null, false, binderUser.uid
 
@@ -90,12 +90,19 @@ const SignUpPhoto = (props) => {
                         createUser(auth.currentUser.uid, username, displayName, photoURL, birthday, email, null)
                             .then(() => {
                                 sendBinderChat()
+
+                                if (!school) {
+                                    setLoading(false);
+                                    props.onTaskComplete('Account successfully created!');
+                                    return;
+                                }
+
                                 if (school?.id)
                                     addUserToSchool(school.id)
                                         .then(() => {
                                             updateUser({ schoolId: school.id })
                                             setLoading(false);
-                                            props.onTaskComplete('Success!');
+                                            props.onTaskComplete('Account successfully created!');
                                         })
                                         .catch((e) => {
                                             setLoading(false);

@@ -78,18 +78,18 @@ const FlippableFlashcard = (props) => {
 
                 <Animated.View style={{ ...styles.flipCard, backgroundColor: Colors[colorScheme].invertedTint, ...flipToFrontStyle, width: props.width || 320, height: props.height || 180 }}>
                     {
-                        !props.card.cardFront.isImage ?
-                            <MediumText h3 accent style={styles.term}>{props.card.cardFront.data}</MediumText>
+                        !props.card.cardA.isImage ?
+                            <MediumText h3 accent style={styles.term}>{props.card.cardA.data}</MediumText>
                             :
-                            <Image source={{ uri: props.card.cardFront.data }} style={{ width: '90%', height: '90%', borderRadius: 10, resizeMode: 'contain' }} />
+                            <Image source={{ uri: props.card.cardA.data }} style={{ width: '90%', height: '90%', borderRadius: 10, resizeMode: 'contain' }} />
                     }
                 </Animated.View>
 
-                <Animated.View style={{ ...styles.flipCard, backgroundColor: Colors[colorScheme].invertedTint, ...flipToBackStyle, ...styles.cardBack, width: props.width || 320, height: props.height || 180 }}>
-                    {!props.card.cardBack.isImage ?
-                        <RegularText numberOfLines={10} style={styles.definition}>{props.card.cardBack.data}</RegularText>
+                <Animated.View style={{ ...styles.flipCard, backgroundColor: Colors[colorScheme].invertedTint, ...flipToBackStyle, ...styles.cardB, width: props.width || 320, height: props.height || 180 }}>
+                    {!props.card.cardB.isImage ?
+                        <RegularText numberOfLines={10} style={styles.definition}>{props.card.cardB.data}</RegularText>
                         :
-                        <Image source={{ uri: props.card.cardBack.data }} style={{ width: '100%', height: '90%', resizeMode: 'contain' }} />
+                        <Image source={{ uri: props.card.cardB.data }} style={{ width: '100%', height: '90%', resizeMode: 'contain' }} />
 
                     }
                 </Animated.View>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         width: '80%',
     },
 
-    cardFront: {
+    cardA: {
         padding: 10,
 
 
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
 
     },
-    cardBack: {
+    cardB: {
         position: 'absolute'
 
 

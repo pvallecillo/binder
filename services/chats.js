@@ -380,15 +380,14 @@ export const removeUserFromChat = (id, uid = auth.currentUser.uid) => new Promis
         .catch(reject)
 })
 
-
 export const createChat = (data) => new Promise((resolve, reject) => {
     db.collection('chatrooms')
         .add({
             ...data,
             creator: auth.currentUser.uid,
-            createdAt: Date.now(),
+            createdAt: new Date().getTime(),
             recentActivity: {
-                content: "created the chat",
+                content: "created the " + data.type,
                 uid: auth.currentUser.uid,
                 createdAt: new Date().getTime()
             }

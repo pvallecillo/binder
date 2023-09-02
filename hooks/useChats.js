@@ -13,7 +13,7 @@ export const useChats = () => {
         (change, users) => {
 
             dispatch(setChats(change.docs.map(item => {
-                const user = users.find(user => user.uid == item.data().users.find(uid => uid != auth.currentUser.uid));
+                const user = users.find(user => user?.uid == item.data().users.find(uid => uid != auth.currentUser.uid));
 
                 return { id: item.id, user: item.data().type == 'private' ? user : null, ...item.data() }
 

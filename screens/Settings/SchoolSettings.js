@@ -17,6 +17,7 @@ import { updateUser } from '../../services/user'
 import { getDefaultImage, getErrorMessage, getResultsFromSearch } from '../../utils'
 import { addUserToChat, createChat, removeUserFromChat, updateChat } from '../../services/chats'
 import { RegularText } from '../../components/StyledText'
+import CustomImage from '../../components/CustomImage'
 const SchoolSettings = (props) => {
     const { useCase } = props.route.params;
     const [school, setSchool] = useState(props.route.params.school);
@@ -206,8 +207,8 @@ const SchoolSettings = (props) => {
                     onPress={onSelectSchoolPress}
                     editable={false}
                     value={school?.name}
-                    placeholder={"Select a School"}
-                    rightIcon={<Image source={assets.down_arrow} style={{ width: 28, height: 28, tintColor: Colors[colorScheme].darkGray }} />}
+                    placeholder={"School"}
+                    rightIcon={<CustomImage source={assets.down_arrow} style={{ width: 28, height: 28, tintColor: Colors[colorScheme].darkGray }} />}
                 />
 
 

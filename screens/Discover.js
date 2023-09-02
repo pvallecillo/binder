@@ -80,24 +80,35 @@ const Discover = (props) => {
     const onCreatePress = () => {
         props.navigation.navigate('SelectUsers', {
             title: 'Add Members',
+            headerRight: () => (
+                <MediumText
+                    darkgray
+                    h5
+                    onPress={() => {
+                        props.navigation.goBack();
+                        goToEditChat([auth.currentUser.uid])
+                    }}>
+                    {"Skip"}
+                </MediumText>),
             onSubmit: (users) => {
                 setUsers(users);
-                getChatByUids([...users.map(user => user.uid), auth.currentUser.uid])
+                const uids = [...users.map(user => user.uid), auth.currentUser.uid]
+                getChatByUids(uids)
                     .then(chat => {
                         if (chat)
                             setShowModal(true);
                         else {
-                            goToEditChat();
+                            goToEditChat(uids);
                         }
                     })
             }
         });
     }
 
-    const goToEditChat = () => {
+    const goToEditChat = (users) => {
         props.navigation.navigate('EditChat', {
             useCase: 'new group',
-            users: [...users.map(user => user.uid), auth.currentUser.uid]
+            users
         })
     }
     return (

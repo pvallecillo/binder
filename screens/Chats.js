@@ -14,7 +14,6 @@ import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import SlideModal from '../components/SlideModal';
 import OptionsList from '../components/OptionsList';
-import SpringModal from '../components/SpringModal';
 import { ConfirmationModal } from '../components/Modals';
 import { BoldText, MediumText, RegularText } from '../components/StyledText';
 import CustomImage from '../components/CustomImage';

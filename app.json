@@ -1,8 +1,9 @@
 {
   "expo": {
     "name": "Binder",
-    "slug": "Binder",
-    "description": "An app designed to make your school life simplier. Use Binder tp connect with classmates and keep track of your study materials.",
+    "slug": "binder",
+    "description": "Connect with classmates and keep track of your study materials.",
+    "owner": "calebh1130",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

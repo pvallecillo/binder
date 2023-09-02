@@ -129,7 +129,7 @@ const ChatProfile = (props) => {
             useCase: 'edit group',
             ...chat,
 
-            onSubmit: (chat) => { updateChat(id, chat); setChat(chat); props.route.params?.setChat(chat) }
+            onSubmit: (chat) => { updateChat(id, chat); setChat(chat); props.route.params?.setChat && props.route.params.setChat(chat) }
         })
     }
     const onCameraPress = () => {

@@ -125,17 +125,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     headerRight: {
-
         width: 40,
         height: 40,
         justifyContent: 'center'
 
     },
     mainContainer: {
-        marginHorizontal: 15,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        marginHorizontal: 15,
+        marginBottom: 15
+
 
 
 

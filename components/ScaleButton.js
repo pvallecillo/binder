@@ -1,69 +1,43 @@
-import { Animated, TouchableOpacity } from 'react-native'
+import { Pressable, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import React, { useRef } from 'react'
 import { haptics } from '../utils'
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 
 
-const ScaleButton = (props) => {
-    const scaleValue = useRef(new Animated.Value(1)).current
-    const animationDuration = 80
-    const animationEnabled = props.animationEnabled == null ? true : props.animationEnabled
-    const animate = () => {
-        Animated.sequence([
+const ScaleButton = ({ toValue, style, onPress, onLongPress, disabled, ...props }) => {
+    const scaleValue = useSharedValue(1);
 
+    const animatedStyles = useAnimatedStyle(() => ({
 
-            Animated.timing(scaleValue, {
-                toValue: props.toValue || 0.9,
-                duration: props.duration || animationDuration,
-                useNativeDriver: true
-            }),
-            Animated.timing(scaleValue,
-                {
-                    toValue: 1,
-                    duration: props.duration || animationDuration,
-                    useNativeDriver: true
-                })
-        ]).start()
+        transform: [{ scale: withSpring(scaleValue.value) }]
+    }))
 
 
 
-    }
-
-
-
-    const onButtonPress = () => {
-        if (animationEnabled)
-            animate()
-        setTimeout(() => {
-            props.onPress()
-        }, animationDuration);
-
-
-    }
-    const onButtonLongPress = () => {
-        if (!props.disabled) {
-            haptics('light')
-
-            props.onLongPress()
-        }
-    }
 
     return (
-
-        <TouchableOpacity
-            disabled={props.disabled}
-            onPress={onButtonPress}
-            onLongPress={onButtonLongPress}
-            activeOpacity={props.activeOpacity || 1}
-            {...props}
+        <TouchableWithoutFeedback
+            onPressIn={() => scaleValue.value = toValue || 0.9}
+            onPressOut={() => scaleValue.value = 1}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            disabled={disabled}
         >
 
-            <Animated.View style={{ transform: [{ scale: scaleValue }], ...props.style }}>
+            <Animated.View
+
+                style={[animatedStyles, style]}
+                {...props}
+            >
+
+
 
                 {props.children}
 
 
             </Animated.View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
+
     )
 }
 

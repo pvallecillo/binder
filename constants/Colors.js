@@ -7,7 +7,7 @@ export default {
   primary: '#9D3EF4',
   accent: '#56A8F4',
   red: '#FD6464',
-  green: '#rgba(54,195,140,1)',
+  green: '#36C38C',
   yellow: '#FAE800',
   blue: '#2276F6',
   orange: '#F89E3E',

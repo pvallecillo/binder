@@ -721,7 +721,7 @@ const Profile = (props) => {
                             renderItem={({ item }) =>
                                 item.data &&
                                 <TouchableOpacity
-                                    onPress={() => item.data && onProfileItemPress(item)}
+                                    onPress={() => item.data == "Edit" ? item.onPress() : onProfileItemPress(item)}
                                     style={[styles.profileItemContainer, { borderColor: Colors[colorScheme].lightGray }]}>
                                     <LightText
                                         lightgray

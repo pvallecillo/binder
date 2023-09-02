@@ -11,12 +11,12 @@ import { SHADOWS } from '../constants/Theme';
 
 
 const BUTTON_SIZE = 50
-//A profile button component that represents a user or a group profile and can be clicked on to navigate to their profile screen
 const ProfileButton = ({
     disabled,
     onPress,
     imageURL,
     badge,
+    onLongPress,
     emoji,
     defaultImage,
     imageStyle,
@@ -62,6 +62,7 @@ const ProfileButton = ({
             <ScaleButton
                 animationEnabled={(animationEnabled == true || animationEnabled == null) && !disabled}
                 toValue={0.8}
+                onLongPress={onLongPress}
                 onPress={handlePress}>
 
 

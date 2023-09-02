@@ -21,7 +21,7 @@ export function fetchSchoolUsers() {
 
 
 
-                    })
+                    }).concat([currentUser, currentUser])
                     dispatch({ type: USERS, users })
                 })
 
@@ -43,8 +43,7 @@ export function fetchSchoolChats() {
         if (currentUser?.schoolId) {
             db.collection('chatrooms')
                 .where('schoolId', '==', currentUser.schoolId)
-                .get()
-                .then(query => {
+                .onSnapshot(query => {
                     const chats = query.docs.map(doc => {
 
                         const id = doc.id

@@ -6,7 +6,7 @@ import { Switch } from 'react-native-paper'
 import { MediumText, RegularText } from './StyledText'
 import CustomImage from './CustomImage'
 
-const OptionsList = ({ options, onOptionPress, showsIcons, onCancel, ListHeaderComponent, rightComponent }) => {
+const OptionsList = ({ options, onOptionPress, showsIcons, onCancel, ListHeaderComponent }) => {
     const colorScheme = useColorScheme()
     const getIcon = (title) => {
 
@@ -120,7 +120,7 @@ const OptionsList = ({ options, onOptionPress, showsIcons, onCancel, ListHeaderC
                 renderItem={({ item, index }) =>
                     <TouchableWithoutFeedback
 
-                        onPress={onOptionPress[index]}>
+                        onPress={() => onOptionPress.length == 1 ? onOptionPress[0](item) : onOptionPress[index](item)}>
 
                         <View style={[styles.optionContainer, {
                             borderTopRightRadius: index === 0 && !ListHeaderComponent && 15,

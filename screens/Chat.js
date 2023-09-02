@@ -25,14 +25,10 @@ import useColorScheme from '../hooks/useColorScheme'
 import ChatMessage from '../components/ChatMessage'
 import firebase from 'firebase/compat'
 import CustomBottomSheet from '../components/CustomBottomSheet'
-import BurningQuestion from '../components/BurningQuestion'
 import { connect, useSelector } from 'react-redux'
 import { ConfirmationModal } from '../components/Modals'
-import SpringModal from '../components/SpringModal'
-import DropDownNotification from '../components/DropDownNotification'
 import { getDefaultImage, getErrorMessage, getItemLayout, haptics, openMediaLibrary } from '../utils'
 import { createChat, pinMessage, sendMessage, unpinMessage, updateChat, updateMessage, updateMessageLikes } from '../services/chats'
-import DeskItemThumbnail from '../components/DeskItemThumbnail'
 import { bindActionCreators } from 'redux'
 import { fetchMessages } from '../redux/actions/messages'
 import { useMessages } from '../hooks/useMessages'
@@ -43,6 +39,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import Button from '../components/Button'
 import ScaleButton from '../components/ScaleButton'
 import SpecialChatItem from '../components/SpecialChatItem'
+import SlideModal from '../components/SlideModal'
 
 const Chat = (props) => {
     const [message, setMessage] = useState({ text: '', specialChatItem: null, contentType: '', deskItem: null, media: null });
@@ -392,7 +389,10 @@ const Chat = (props) => {
                 onReportPress={onReportPress}
 
             />
-            <SpringModal onCancel={() => setShowConfirmationModal(false)} showModal={showConfirmationModal}>
+            <SlideModal
+                toValue={0.5}
+                onCancel={() => setShowConfirmationModal(false)}
+                showModal={showConfirmationModal}>
 
 
                 <ConfirmationModal
@@ -400,7 +400,7 @@ const Chat = (props) => {
                     onConfirmPress={() => { setShowConfirmationModal(false); setMessage({ text: '', contentType: '', specialChatItem: null }) }}
                     onCancelPress={() => setShowConfirmationModal(false)}
                 />
-            </SpringModal>
+            </SlideModal>
 
             <CustomBottomSheet
                 ref={bs}

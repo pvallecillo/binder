@@ -77,7 +77,7 @@ const ChatListItem = ({
             <View style={{ marginLeft: 10, width: '80%' }}>
               <BoldText h5>{title}</BoldText>
 
-              {subtitle && <RegularText darkgray numberOfLines={2}>{subtitle}</RegularText>}
+              {subtitle && <LightText darkgray numberOfLines={2}>{subtitle}</LightText>}
 
 
             </View>

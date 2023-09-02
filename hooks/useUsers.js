@@ -14,7 +14,7 @@ const useUsers = () => {
     const handleUsersChange = useCallback(
         (change) => {
 
-            setUsers(change.docs.map(item => ({ ...item.data() })))
+            setUsers(change.docs.map(item => ({ ...item.data() })).concat(currentUser))
 
         },
         [dispatch],

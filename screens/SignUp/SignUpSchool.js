@@ -44,7 +44,7 @@ const SignUpSchool = (props) => {
 
     const onNextPressed = () => {
 
-        props.navigation.navigate('SignUpPhoto', { ...props.route.params, school: school })
+        props.navigation.navigate('SignUpPhoto', { ...props.route.params, school })
     }
 
 
@@ -81,15 +81,20 @@ const SignUpSchool = (props) => {
                     editable={false}
                     value={school?.name}
                     isClearable={false}
-                    placeholder={"Select a School"}
+                    placeholder={"School"}
                     rightIcon={<CustomImage source={assets.down_arrow} style={{ width: 28, height: 28, tintColor: Colors[colorScheme].darkGray }} />}
                 />
                 <Button
                     title={'Next'}
                     onPress={onNextPressed}
-                    style={{ marginTop: 20, paddingHorizontal: 40, }}
+                    style={{ marginVertical: 20, paddingHorizontal: 40, }}
                     disabled={!school}
                 />
+
+                <MediumText
+                    h5
+                    darkgray
+                    onPress={onNextPressed}>Skip</MediumText>
 
 
             </View>
